@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="StarGateV1.vcxproj" Id="0e90f51c-1924-4b1a-8baa-18ac1b50e4fc" />
+</Solution>
