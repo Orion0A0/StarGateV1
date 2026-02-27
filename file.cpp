@@ -10,13 +10,13 @@
 File::File():filename(FILE_NAME){}
 
 // make sure to save the actual object and not the address 
-void File::savingProgress(std::vector<std::unique_ptr<Guard>>& enemies, Player player) // not done, still need player
+void File::savingProgress(std::vector<Guard*>& enemies, Player player) // not done, still need player
 {
     out = openOutFile();
     // saves enemies
     for (size_t i = 0; i < enemies.size(); ++i)
     {
-		Guard* enemy = enemies.at(i).get();
+		Guard* enemy = enemies.at(i);
         out.write(reinterpret_cast<char*>(enemy), sizeof(Guard));
     }
         
@@ -27,8 +27,10 @@ void File::savingProgress(std::vector<std::unique_ptr<Guard>>& enemies, Player p
     out.close();
 }
 
-std::vector<std::unique_ptr<Guard>>& File::readingProgress_enemy()
+std::vector<Guard>& File::readingProgress_enemy()
 {
+	enemies_storage.clear(); // clear the storage vector before reading from file, in case this function is called multiple times
+
     Fodder f;
     RegularArmy r;
     AdvancedArmy a;
@@ -41,19 +43,19 @@ std::vector<std::unique_ptr<Guard>>& File::readingProgress_enemy()
         if(i <= NUM_F_GUARD)
         {
             in.read(reinterpret_cast<char*>(&f), sizeof(Fodder));
-            enemies_storage.push_back(std::unique_ptr<Guard>(&f));
+            enemies_storage.push_back(f);
             continue;
         }
         if(i > NUM_F_GUARD && i <= (NUM_F_GUARD + NUM_R_GUARD))
         {
             in.read(reinterpret_cast<char*>(&r), sizeof(RegularArmy));
-            enemies_storage.push_back(std::unique_ptr<Guard>(&r));
+            enemies_storage.push_back(r);
             continue;
         }
         if(i > (NUM_F_GUARD + NUM_R_GUARD))
         {
             in.read(reinterpret_cast<char*>(&a), sizeof(AdvancedArmy));
-            enemies_storage.push_back(std::unique_ptr<Guard>(&a));
+            enemies_storage.push_back(a);
             continue;
         }
     }

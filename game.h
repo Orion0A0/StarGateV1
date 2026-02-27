@@ -1,5 +1,4 @@
 #include <vector>
-#include <memory>
 #include "enemy.h"
 #include "player.h"
 
@@ -27,8 +26,10 @@ public:
 
 
 protected: 
-    std::vector<std::unique_ptr<Guard>> enemies;
+    std::vector<Guard*> enemies;
     Player* player = nullptr;
+
+	void objectToPointer(const std::vector<Guard>&);
 private:
     // enemy support function
     void checkAdjcent();

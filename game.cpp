@@ -36,9 +36,9 @@ void Game::initial()
 {
     player = new Player();
     enemies = {
-        std::make_unique<Fodder>(), std::make_unique<Fodder>(), std::make_unique<Fodder>(), std::make_unique<Fodder>(),
-        std::make_unique<RegularArmy>(), std::make_unique<RegularArmy>(), std::make_unique<RegularArmy>(),
-        std::make_unique<AdvancedArmy>(), std::make_unique<AdvancedArmy>()
+        new Fodder(), new Fodder(), new Fodder(), new Fodder(),
+        new RegularArmy(), new RegularArmy(), new RegularArmy(),
+        new AdvancedArmy(), new AdvancedArmy()
     };
 
 }
@@ -50,10 +50,10 @@ void Game::moveEnemy()
     {
         if(enemies.at(i)->getChasePlayer()) // if the enemy detects the player, this will become true
         {
-            move(enemies.at(i).get(), enemies.at(i)->moveAtRandom(player->getPosition()));
+            move(enemies.at(i), enemies.at(i)->moveAtRandom(player->getPosition()));
             continue;
         } 
-        move(enemies.at(i).get(), enemies.at(i)->moveAtRandom());
+        move(enemies.at(i), enemies.at(i)->moveAtRandom());
     }
 }
 
@@ -103,6 +103,20 @@ void Game::checkAdjcent() // determines if player is near A_guard
 void Game::move(Entity* obj, Movement move)
 {
     obj->movePosition(move);
+}
+
+void Game::objectToPointer(const std::vector<Guard>& target)
+{
+    for (int i = 0; i < target.size(); ++i)
+    {
+        if (target.at(i).getSymbol() == FODDER_SYMBOL)
+            enemies.push_back(new Fodder(target.at(i)));
+        else if (target.at(i).getSymbol() == R_ARMY_SYMBOL)
+            enemies.push_back(new RegularArmy(target.at(i)));
+        else if (target.at(i).getSymbol() == A_ARMY_SYMBOL)
+			enemies.push_back(new AdvancedArmy(target.at(i)));
+    }
+    
 }
 
 bool Game::reset() 

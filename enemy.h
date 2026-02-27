@@ -14,6 +14,14 @@ class Fodder: public Guard
 {
 public:
     Fodder(): Guard(FODDER_SYMBOL, spawnRandom()){}
+	Fodder(const Guard& other) : Guard(other.getSymbol(), other.getPosition()) {}
+	~Fodder() = default;
+    Fodder& operator=(const Fodder& other)
+    {
+		symbol = other.symbol;
+        position = other.position;
+		return *this;
+    }
 
     Movement moveAtRandom() override
     {
@@ -35,6 +43,14 @@ class RegularArmy: public Guard
 {
 public:
     RegularArmy(): Guard(R_ARMY_SYMBOL, spawnRandom()){}
+	RegularArmy(const Guard& other) : Guard(other.getSymbol(), other.getPosition()) {}
+	~RegularArmy() = default;
+    RegularArmy& operator=(const RegularArmy& other)
+	{
+        symbol = other.symbol;
+		position = other.position;
+        return *this;
+	}
 
     Movement moveAtRandom() override
     {
@@ -56,7 +72,14 @@ class AdvancedArmy: public Guard
 {
 public:
     AdvancedArmy(): Guard(A_ARMY_SYMBOL, spawnRandom()){}
-
+	AdvancedArmy(const Guard& other) : Guard(other.getSymbol(), other.getPosition()) {}
+	~AdvancedArmy() = default;
+    AdvancedArmy& operator=(const AdvancedArmy& other)
+    {
+		symbol = other.symbol;
+		position = other.position;
+		return *this;
+    }
     Movement moveAtRandom() override
     {
         Movement move = INVALID;

@@ -65,8 +65,7 @@ void GUI::loadSavedGames()
     // check if the file exist
         // if false: throws a runtime exception (outside)
         // if true: call readingProgress for both player and enemies from File class 
-
-    enemies = file.readingProgress_enemy(); // this is the issue
+    objectToPointer(file.readingProgress_enemy());
 	player = new Player(file.readingProgress_player());
         
 }
@@ -76,7 +75,7 @@ void GUI::saveGames()
 	file.savingProgress(enemies, *player);
 }
 
-std::string GUI::printSymbol(std::vector<std::unique_ptr<Guard>>& enemies, int currPos)
+std::string GUI::printSymbol(std::vector<Guard*>& enemies, int currPos)
 {
     std::string textToReturn{};
 

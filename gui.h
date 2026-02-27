@@ -12,7 +12,7 @@ public:
     std::string removeDupes(const std::string&); // FIX me
     std::string checkLength_three(const std::string&); // FIXE
     std::string printSymbol(Player, int);
-    std::string printSymbol(std::vector<std::unique_ptr<Guard>>&, int);
+    std::string printSymbol(std::vector<Guard*>&, int);
     void loadSavedGames();
     void printGame();
     void saveGames();
